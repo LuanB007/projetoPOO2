@@ -1,7 +1,6 @@
 package br.edu.ifpb.model;
 
 import java.util.Objects;
-
 /**
  *
  * @author Luan
@@ -10,11 +9,15 @@ public class Funcionario {
     private String nome;
     private String cpf;
     private String setor;
+    private String usuario;
+    private String senha;
 
-    public Funcionario(String nome, String cpf, String setor) {
+    public Funcionario(String nome, String cpf, String setor, String usuario, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.setor = setor;
+        this.usuario = usuario;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -41,12 +44,30 @@ public class Funcionario {
         this.setor = setor;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.nome);
-        hash = 47 * hash + Objects.hashCode(this.cpf);
-        hash = 47 * hash + Objects.hashCode(this.setor);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.nome);
+        hash = 41 * hash + Objects.hashCode(this.cpf);
+        hash = 41 * hash + Objects.hashCode(this.setor);
+        hash = 41 * hash + Objects.hashCode(this.usuario);
+        hash = 41 * hash + Objects.hashCode(this.senha);
         return hash;
     }
 
@@ -71,7 +92,13 @@ public class Funcionario {
         if (!Objects.equals(this.setor, other.setor)) {
             return false;
         }
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
         return true;
     }
-    
+
 }
