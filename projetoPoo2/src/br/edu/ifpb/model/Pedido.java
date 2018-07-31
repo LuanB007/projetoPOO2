@@ -17,8 +17,8 @@ public class Pedido {
     public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora, double subtotal) {
         this.produto = produto;
         this.quantidade = quantidade;
-        this.data = data;
-        this.hora = hora;
+        this.data = LocalDate.now();
+        this.hora = LocalDate.now();
         this.subtotal = subtotal;
     }
 
