@@ -9,11 +9,11 @@ import java.util.Objects;
  */
 public class Comanda {
     private List<Pedido> pedidos;
-    private boolean atendido;
+    private boolean status;
 
     public Comanda(List<Pedido> pedidos, boolean atendido) {
         this.pedidos = pedidos;
-        this.atendido = atendido;
+        this.status = atendido;
     }
 
     public List<Pedido> getPedidos() {
@@ -24,19 +24,19 @@ public class Comanda {
         this.pedidos = pedidos;
     }
 
-    public boolean isAtendido() {
-        return atendido;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setAtendido(boolean atendido) {
-        this.atendido = atendido;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + Objects.hashCode(this.pedidos);
-        hash = 31 * hash + (this.atendido ? 1 : 0);
+        hash = 31 * hash + (this.status ? 1 : 0);
         return hash;
     }
 
@@ -52,7 +52,7 @@ public class Comanda {
             return false;
         }
         final Comanda other = (Comanda) obj;
-        if (this.atendido != other.atendido) {
+        if (this.status != other.status) {
             return false;
         }
         if (!Objects.equals(this.pedidos, other.pedidos)) {
@@ -63,7 +63,7 @@ public class Comanda {
 
     @Override
     public String toString() {
-        return "Comanda{" + "pedidos=" + pedidos + ", atendido=" + atendido + '}';
+        return "Comanda{" + "pedidos=" + pedidos + ", atendido=" + status + '}';
     }
     
 }
