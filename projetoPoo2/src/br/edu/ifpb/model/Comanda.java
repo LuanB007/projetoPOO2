@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,11 +10,11 @@ import java.util.Objects;
  */
 public class Comanda {
     private List<Pedido> pedidos;
-    private boolean status;
+    private int numMesa;
 
-    public Comanda(List<Pedido> pedidos, boolean atendido) {
-        this.pedidos = pedidos;
-        this.status = atendido;
+    public Comanda(List<Pedido> pedidos, int numMesa) {
+        this.pedidos = new ArrayList<>();
+        this.numMesa = numMesa;
     }
 
     public List<Pedido> getPedidos() {
@@ -24,19 +25,19 @@ public class Comanda {
         this.pedidos = pedidos;
     }
 
-    public boolean isStatus() {
-        return status;
+    public int getNumMesa() {
+        return numMesa;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setNumMesa(int numMesa) {
+        this.numMesa = numMesa;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         hash = 31 * hash + Objects.hashCode(this.pedidos);
-        hash = 31 * hash + (this.status ? 1 : 0);
+        hash = 31 * hash + this.numMesa;
         return hash;
     }
 
@@ -52,7 +53,7 @@ public class Comanda {
             return false;
         }
         final Comanda other = (Comanda) obj;
-        if (this.status != other.status) {
+        if (this.numMesa != other.numMesa) {
             return false;
         }
         if (!Objects.equals(this.pedidos, other.pedidos)) {
@@ -60,10 +61,4 @@ public class Comanda {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Comanda{" + "pedidos=" + pedidos + ", atendido=" + status + '}';
-    }
-    
 }

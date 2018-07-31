@@ -1,5 +1,6 @@
-package br.edu.ifpb.model;
+package br.edu.ifpb.services;
 
+import br.edu.ifpb.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -1,6 +1,7 @@
 package br.edu.ifpb.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -11,15 +12,17 @@ public class Pedido {
     private Produto produto;
     private int quantidade;
     private LocalDate data;
-    private LocalDate hora;
+    private LocalDateTime hora;
     private double subtotal;
+    private boolean status;
 
-    public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora, double subtotal) {
+    public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora, double subtotal, boolean status) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.data = LocalDate.now();
-        this.hora = LocalDate.now();
+        this.hora = LocalDateTime.now();
         this.subtotal = subtotal;
+        this.status = status;
     }
 
     public Produto getProduto() {
@@ -46,30 +49,39 @@ public class Pedido {
         this.data = data;
     }
 
-    public LocalDate getHora() {
+    public LocalDateTime getHora() {
         return hora;
     }
 
-    public void setHora(LocalDate hora) {
+    public void setHora(LocalDateTime hora) {
         this.hora = hora;
     }
 
     public double getSubtotal() {
-        return produto.getPrecoUnit() * quantidade;
+        return subtotal;
     }
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.produto);
-        hash = 23 * hash + this.quantidade;
-        hash = 23 * hash + Objects.hashCode(this.data);
-        hash = 23 * hash + Objects.hashCode(this.hora);
-        hash = 23 * hash + (int) (Double.doubleToLongBits(this.subtotal) ^ (Double.doubleToLongBits(this.subtotal) >>> 32));
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.produto);
+        hash = 43 * hash + this.quantidade;
+        hash = 43 * hash + Objects.hashCode(this.data);
+        hash = 43 * hash + Objects.hashCode(this.hora);
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.subtotal) ^ (Double.doubleToLongBits(this.subtotal) >>> 32));
+        hash = 43 * hash + (this.status ? 1 : 0);
         return hash;
     }
 
@@ -91,6 +103,9 @@ public class Pedido {
         if (Double.doubleToLongBits(this.subtotal) != Double.doubleToLongBits(other.subtotal)) {
             return false;
         }
+        if (this.status != other.status) {
+            return false;
+        }
         if (!Objects.equals(this.produto, other.produto)) {
             return false;
         }
@@ -105,7 +120,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "produto=" + produto + ", quantidade=" + quantidade + ", data=" + data + ", hora=" + hora + ", subtotal=" + subtotal + '}';
+        return "Pedido{" + "produto=" + produto + ", quantidade=" + quantidade + ", data=" + data + ", hora=" + hora + ", subtotal=" + subtotal + ", status=" + status + '}';
     }
-    
+
 }

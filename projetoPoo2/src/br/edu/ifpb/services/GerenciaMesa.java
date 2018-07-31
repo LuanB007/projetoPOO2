@@ -1,5 +1,6 @@
-package br.edu.ifpb.model;
+package br.edu.ifpb.services;
 
+import br.edu.ifpb.model.Comanda;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,20 +10,20 @@ import java.util.Objects;
  */
 public class GerenciaMesa {
     private static int id;
-    private int numero;
+    private int numeroMesa;
     private List<Comanda> comanda;
 
     public GerenciaMesa(int numero, List<Comanda> comanda) {
-        this.numero = id++;
+        this.numeroMesa = id++;
         this.comanda = comanda;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getNumeroMesa() {
+        return numeroMesa;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumeroMesa(int numeroMesa) {
+        this.numeroMesa = numeroMesa;
     }
 
     public List<Comanda> getComanda() {
@@ -36,7 +37,7 @@ public class GerenciaMesa {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.numero;
+        hash = 37 * hash + this.numeroMesa;
         hash = 37 * hash + Objects.hashCode(this.comanda);
         return hash;
     }
@@ -53,7 +54,7 @@ public class GerenciaMesa {
             return false;
         }
         final GerenciaMesa other = (GerenciaMesa) obj;
-        if (this.numero != other.numero) {
+        if (this.numeroMesa != other.numeroMesa) {
             return false;
         }
         if (!Objects.equals(this.comanda, other.comanda)) {
@@ -64,7 +65,7 @@ public class GerenciaMesa {
 
     @Override
     public String toString() {
-        return "GerenciaMesa{" + "numero=" + numero + ", comanda=" + comanda + '}';
+        return "GerenciaMesa{" + "numero=" + numeroMesa + ", comanda=" + comanda + '}';
     }
     
 }
