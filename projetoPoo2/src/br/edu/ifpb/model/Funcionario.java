@@ -7,14 +7,12 @@ import java.util.Objects;
  */
 public class Funcionario {
     private String nome;
-    private String cpf;
     private String setor;
     private String usuario;
     private String senha;
 
-    public Funcionario(String nome, String cpf, String setor, String usuario, String senha) {
+    public Funcionario(String nome, String setor, String usuario, String senha) {
         this.nome = nome;
-        this.cpf = cpf;
         this.setor = setor;
         this.usuario = usuario;
         this.senha = senha;
@@ -26,14 +24,6 @@ public class Funcionario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getSetor() {
@@ -64,7 +54,6 @@ public class Funcionario {
     public int hashCode() {
         int hash = 7;
         hash = 41 * hash + Objects.hashCode(this.nome);
-        hash = 41 * hash + Objects.hashCode(this.cpf);
         hash = 41 * hash + Objects.hashCode(this.setor);
         hash = 41 * hash + Objects.hashCode(this.usuario);
         hash = 41 * hash + Objects.hashCode(this.senha);
@@ -84,9 +73,6 @@ public class Funcionario {
         }
         final Funcionario other = (Funcionario) obj;
         if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.cpf, other.cpf)) {
             return false;
         }
         if (!Objects.equals(this.setor, other.setor)) {
