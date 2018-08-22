@@ -1,4 +1,4 @@
-package br.edu.ifpb.services;
+package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Comanda;
 import java.util.List;
