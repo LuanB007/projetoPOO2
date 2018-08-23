@@ -46,7 +46,7 @@ public class CadastroUsuario {
         return null;
 }
 
-public boolean salvar(Funcionario funcionario){
+    public boolean salvar(Funcionario funcionario){
 
         if(isCheio()){
             aumentarArray();
@@ -60,15 +60,21 @@ public boolean salvar(Funcionario funcionario){
         }
     }
 
-    
     public Funcionario[] listar(){
         return Arrays.copyOfRange(funcionarios, 0, quant);
     }
     
-    public void atualizar(Funcionario funcionario){
-        //falta
-    }
-    
+    public boolean atualizar(Funcionario funcionario){
+        int i = posicaoPorCpf(funcionario.getCpf());
+
+        if(i>=0){
+            funcionarios[i] = funcionario;
+            return true;
+        }else{
+            return false;
+        }
+}
+
     public boolean excluir(String cpf){
         int i = posicaoPorCpf(cpf);
 
