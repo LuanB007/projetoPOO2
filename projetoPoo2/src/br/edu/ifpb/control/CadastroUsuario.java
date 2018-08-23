@@ -36,27 +36,30 @@ public class CadastroUsuario {
         }
         return -1;
     }
-
-
-    public boolean salvar(Funcionario funcionario, int posicao){
-        if(posicao>=0 && posicao<=quant){
-
-            if(isCheio()){
-                aumentarArray();
+    
+    public Funcionario buscarPorCpf(String cpf){
+        for(int i=0; i<quant; i++){
+            if(funcionarios[i].getCpf().equalsIgnoreCase(cpf)){
+                return funcionarios[i];
             }
+        }
+        return null;
+}
 
-            for(int i = quant; i>posicao; i--){
-                funcionarios[i] = funcionarios[i-1];
-            }
+public boolean salvar(Funcionario funcionario){
 
-            funcionarios[posicao] = funcionario;
-            quant++;
+        if(isCheio()){
+            aumentarArray();
+        }
+
+        if(buscarPorCpf(funcionario.getCpf()) == null){
+            funcionarios[quant++] = funcionario;
             return true;
-
         }else{
             return false;
         }
     }
+
     
     public Funcionario[] listar(){
         return Arrays.copyOfRange(funcionarios, 0, quant);
