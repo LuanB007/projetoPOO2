@@ -18,9 +18,10 @@ public class App {
         System.out.println(admin.toString());
         System.out.println(admin2.toString());
         
-        System.out.println(admin.equals(admin2));
-        
         CadastroUsuarioDao cadastrar = new CadastroUsuarioDaoImpl();
-        cadastrar.salvar(admin2);
+        System.out.println(cadastrar.salvar(admin2));
+        System.out.println(cadastrar.salvar(admin));
+//        System.out.println(cadastrar.deletar(admin));
+       
     }
 }

@@ -1,7 +1,6 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Funcionario;
-
 /**
  *
  * @author Luan
@@ -9,7 +8,7 @@ import br.edu.ifpb.model.Funcionario;
 public interface CadastroUsuarioDao {
     
     public boolean salvar(Funcionario funcionario);
-    public Funcionario[] listar();
-    public boolean excluir(String cpf);
+    public boolean deletar(Funcionario funcionario);
     public boolean atualizar(Funcionario funcionario);
+    public Object[] listar();
 }

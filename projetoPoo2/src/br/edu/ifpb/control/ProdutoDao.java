@@ -9,7 +9,7 @@ import br.edu.ifpb.model.Produto;
 public interface ProdutoDao {
     
     public boolean salvar(Produto produto);
-    public Produto[] listar();
-    public boolean excluir(long codigo);
+    public boolean deletar(Produto produto);
     public boolean atualizar(Produto produto);
+    public Object[] listar();
 }
