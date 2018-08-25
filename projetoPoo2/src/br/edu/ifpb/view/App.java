@@ -26,13 +26,31 @@ public class App {
         String pass = ler.next();
         //Verificando se o usuário pertence aos funcionarios da lista.
         if(usuario.autentica(user, pass)) {
-            System.out.println("bem vindo!");
-            System.out.println("Escolha uma opção:");
-            System.out.println("1 - Adicionar novo funcionario;");
-            System.out.println("2 - Atualizar funcionario;");
-            System.out.println("3 - Remover funcionario;");
-            System.out.println("4 - Listar todos os funcionarios.");
-            System.out.println("0 - Sair");
+            int opcao;
+            do{
+                System.out.println("bem vindo!");
+                System.out.println("Escolha uma opção:");
+                System.out.println("1 - Adicionar novo funcionario;");
+                System.out.println("2 - Atualizar funcionario;");
+                System.out.println("3 - Remover funcionario;");
+                System.out.println("4 - Listar todos os funcionarios.");
+                System.out.println("0 - Sair");
+                opcao = ler.nextInt();
+            
+                switch(opcao){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        System.out.println("Saindo do sistema...");
+                    break;          
+                }
+            }while(opcao > 0 && opcao < 5);
         }else System.out.println("Usuario ou senha inválido!");
        
     }
