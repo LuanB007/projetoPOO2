@@ -34,6 +34,6 @@ public class ProdutoDaoImpl implements ProdutoDao {
     
     @Override
     public Object[] listar(){
-        return produtos.toArray(); //erradoS
+        return produtos.toArray();
     }
 }

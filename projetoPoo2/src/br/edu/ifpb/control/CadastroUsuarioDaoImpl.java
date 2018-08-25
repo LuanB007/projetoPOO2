@@ -12,11 +12,14 @@ import java.util.Set;
 public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     
     private Set<Funcionario> funcionarios;
-    private int quant;
 
     public CadastroUsuarioDaoImpl() {
         this.funcionarios = new HashSet<>();
-        this.quant = 0;
+    }
+    
+    @Override
+    public boolean autentica(String user, String pass){
+        return funcionarios.stream().anyMatch((f) -> (f.getUsuario().equals(user) && f.getSenha().equals(pass)));
     }
     
     @Override
@@ -36,7 +39,7 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     }
     
     @Override
-    public Object[] listar(){
-        return funcionarios.toArray();
+    public Set<Funcionario> listar(){
+        return funcionarios;
     }
 }
