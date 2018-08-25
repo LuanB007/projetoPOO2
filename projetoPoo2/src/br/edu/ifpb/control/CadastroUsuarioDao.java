@@ -10,7 +10,8 @@ public interface CadastroUsuarioDao {
     
     public boolean autentica(String user, String pass);
     public boolean salvar(Funcionario funcionario);
-    public boolean deletar(Funcionario funcionario);
-    public boolean atualizar(Funcionario funcionario);
+    public boolean deletar(String cpf);
+    public boolean atualizar(Funcionario funcionario, String cpf);
+    public boolean existeFuncionario(String cpf);
     public Set<Funcionario> listar();
 }

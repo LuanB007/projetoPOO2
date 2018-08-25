@@ -28,14 +28,35 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     }
     
     @Override
-    public boolean deletar(Funcionario funcionario){
-        return funcionarios.remove(funcionario);
+    public boolean deletar(String cpf){
+        if(existeFuncionario(cpf)){
+            for (Funcionario f: funcionarios){
+                if(f.getCpf().equals(cpf)){
+                    funcionarios.remove(f);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     @Override
-    public boolean atualizar(Funcionario funcionario){
-        if(deletar(funcionario)) return salvar(funcionario);
-        else return false;
+    public boolean atualizar(Funcionario funcionario, String cpf){
+        if(existeFuncionario(cpf)){
+            for (Funcionario f: funcionarios){
+                if(f.getCpf().equals(cpf)){
+                    funcionarios.remove(f);
+                    funcionarios.add(funcionario);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean existeFuncionario(String cpf){
+        return funcionarios.stream().anyMatch((f) -> (f.getCpf().equals(cpf)));
     }
     
     @Override
