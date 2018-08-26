@@ -2,7 +2,10 @@ package br.edu.ifpb.view;
 
 import br.edu.ifpb.control.CadastroUsuarioDao;
 import br.edu.ifpb.control.CadastroUsuarioDaoImpl;
+import br.edu.ifpb.control.ProdutoDao;
+import br.edu.ifpb.control.ProdutoDaoImpl;
 import br.edu.ifpb.model.Funcionario;
+import br.edu.ifpb.model.Produto;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -13,12 +16,19 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        //para teste
+        //para teste de funcionario
         Funcionario admin = new Funcionario("administrador", "000.000.000-1", "admin@admin.com", "(83)9.0000-0000", LocalDate.of(1997, 2, 1), "gerencia", "usuario", "senha");
         Funcionario admin2 = new Funcionario("administrador2", "000.000.000-2", "admin2@admin.com", "(83)9.0000-0002", LocalDate.of(1994, 5, 15), "gerencia", "usuario2", "senha2");
         CadastroUsuarioDao usuario = new CadastroUsuarioDaoImpl();
         usuario.salvar(admin2);
         usuario.salvar(admin);
+        //para teste de produto
+        Produto prod = new Produto(1, "Batata frita", "Porção de batata frita com molho", 3.5);
+        Produto prod2 = new Produto(2, "X-Calabresa", "Pao, hamburguer, calabresa e salada", 8.0);
+        ProdutoDao produto = new ProdutoDaoImpl();
+        produto.salvar(prod2);
+        produto.salvar(prod);
+        
         Scanner ler = new Scanner(System.in);
         //login. Iniciando Sistema.
         System.out.println("Digite o usuario:");
@@ -128,16 +138,76 @@ public class App {
                     case 2:
                         int opcao2;
                         do {
+                            System.out.println("Escolha uma opção:");
+                            System.out.println("1 - Adicionar novo produto;");
+                            System.out.println("2 - Atualizar produto;");
+                            System.out.println("3 - Remover produto;");
+                            System.out.println("4 - Listar todos os produtos.");
+                            System.out.println("0 - Sair");
+                            opcao2 = ler.nextInt();
 
-                        } while (opcao2 > 0 && opcao2 < 5);
-                    default:
-                        System.out.println("Saindo do sistema...");
-                        break;
+                            switch (opcao2) {
+                                case 1:
+                                    System.out.println("Adicione um novo produto! Insira os dados... ");
+                                    System.out.println("Código: ");
+                                    long codigo = ler.nextLong();
+                                    System.out.println("Nome: ");
+                                    String nome = ler.next();
+                                    System.out.println("Descrição:");
+                                    String descricao = ler.next();
+                                    System.out.println("Preço unitário: ");
+                                    double preco = ler.nextDouble();
+                                    
+                                    Produto p = new Produto(codigo, nome, descricao, preco);
+                                    produto.salvar(p);
+                                    break;
+                                case 2:
+                                    System.out.println("Insira o código do produto que deseja atualizar: ");
+                                    long velhoCodigo = ler.nextLong();
+                                    //verificando se existe algum funcionario com esse cpf.
+                                    if (produto.existeProduto(velhoCodigo)) {
+                                        System.out.println("Atualize o produto! Insira os dados... ");
+                                        System.out.println("Código: ");
+                                        long codigo2 = ler.nextLong();
+                                        System.out.println("Nome: ");
+                                        String nome2 = ler.next();
+                                        System.out.println("Descrição:");
+                                        String descricao2 = ler.next();
+                                        System.out.println("Preço unitário: ");
+                                        double preco2 = ler.nextDouble();
+                                        Produto p2 = new Produto(codigo2, nome2, descricao2, preco2);
+                                        produto.atualizar(p2, velhoCodigo);
+                                    } else {
+                                        System.err.println("Produto inexistente");
+                                        }
+                                    break;
+                                case 3:
+                                    System.out.println("Digite o código do produto que deseja remover:");
+                                    long codigo3 = ler.nextLong();
+                                    if (produto.existeProduto(codigo3)) {
+                                        produto.deletar(codigo3);
+                                        System.out.println("Produto deletado!");
+                                    } else {
+                                        System.err.println("Produto inexistente");
+                                    }
+                                    break;
+                                case 4:
+                                    System.out.println(produto.listar().toString());
+                                    break;
+                                default:
+                                    System.out.println("Saindo...");
+                                    break;
+                            } 
+                        }while (opcao2 > 0 && opcao2 < 5);
+                        default:
+                            System.out.println("Saindo do sistema...");
+                            break;
                 }
-            } while (selecao > 0 && selecao < 3);
-        } else {
+                }
+                while (selecao > 0 && selecao < 3);
+            } else {
             System.err.println("Usuario ou senha inválido!");
         }
 
+        }
     }
-}
