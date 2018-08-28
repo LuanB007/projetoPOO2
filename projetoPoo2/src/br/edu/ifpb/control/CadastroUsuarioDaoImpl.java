@@ -2,7 +2,6 @@ package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Funcionario;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -61,7 +60,7 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     
     /**
      * Método que atualiza os dados de um funcionário já presente na lista.
-     * @param funcionario objeto funcionário.
+     * @param funcionario objeto funcionário com as informações atualizadas.
      * @param cpf CPF do funcionário.
      * @return 
      */
