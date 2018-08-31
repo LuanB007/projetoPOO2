@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Classe que contem os produtos disponíveis para pedido.
  * @author Luan
  */
 public class Cardapio {
     private List<Produto> produtos;
     
+    /**
+     * Contrutor da classe Cardapio.
+     */
     public Cardapio(){
         this.produtos = new ArrayList<>();
     }

@@ -2,7 +2,7 @@ package br.edu.ifpb.model;
 
 import java.util.Objects;
 /**
- *
+ * Classe que contém os dados do produto.
  * @author Luan
  */
 public class Produto {
@@ -11,6 +11,13 @@ public class Produto {
     private String descricao;
     private double precoUnit;
     
+    /**
+     * Construtor da classe Produto.
+     * @param codigo o código do produto.
+     * @param nome nome do produto.
+     * @param descricao caracteristicas do produto.
+     * @param precoUnit valor unitário.
+     */
     public Produto(long codigo, String nome, String descricao, double precoUnit){
         this.codigo = codigo;
         this.nome = nome;

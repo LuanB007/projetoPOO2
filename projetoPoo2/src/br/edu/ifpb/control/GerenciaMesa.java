@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Classe utilizade para fazer o controle de cada mesa.
  * @author Luan
  */
 public class GerenciaMesa {
@@ -13,6 +13,11 @@ public class GerenciaMesa {
     private int numeroMesa;
     private List<Comanda> comanda;
 
+    /**
+     * Contrutor da classe GerenciaMesa.
+     * @param numero numero da mesa.
+     * @param comanda comanda utilizada para o controle da mesa.
+     */
     public GerenciaMesa(int numero, List<Comanda> comanda) {
         this.numeroMesa = id++;
         this.comanda = comanda;

@@ -3,7 +3,7 @@ package br.edu.ifpb.model;
 import java.time.LocalDate;
 import java.util.Objects;
 /**
- *
+ * Classe que contêm os dados do funcionário.
  * @author Luan
  */
 public class Funcionario {
@@ -16,6 +16,17 @@ public class Funcionario {
     private String usuario;
     private String senha;
 
+    /**
+     * Construtor da classe funcionário.
+     * @param nome nome do funcionário.
+     * @param cpf CPF do funcionário.
+     * @param email email pessoal do funcionário.
+     * @param telefone telefone do funcionário.
+     * @param nascimento data de nascimento do funcionário.
+     * @param setor setor que o funcionário está alocado.
+     * @param usuario usuario usado para fazer login no sistema.
+     * @param senha senha usada para fazer login no sistema.
+     */
     public Funcionario(String nome, String cpf, String email, String telefone, LocalDate nascimento, String setor, String usuario, String senha) {
         this.nome = nome;
         this.cpf = cpf;

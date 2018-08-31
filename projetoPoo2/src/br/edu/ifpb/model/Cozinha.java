@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Classe que contêm os pedidos que estão na cozinha.
  * @author Luan
  */
 public class Cozinha {
     private List<Pedido> pedidos;
 
+    /**
+     * Construtor da classe Cozinha.
+     * @param pedidos pedidos já registrados
+     */
     public Cozinha(List<Pedido> pedidos) {
         this.pedidos = new ArrayList<>();
     }

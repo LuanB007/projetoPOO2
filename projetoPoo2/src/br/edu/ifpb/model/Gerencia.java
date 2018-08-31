@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * 
  * @author Luan
  */
 public class Gerencia {
     private List<Comanda> comandas;
 
+    /**
+     * Contrutor da classe comanda.
+     * @param comandas 
+     */
     public Gerencia(List<Comanda> comandas) {
         this.comandas = new ArrayList<>();
     }

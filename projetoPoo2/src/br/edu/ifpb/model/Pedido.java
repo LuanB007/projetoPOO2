@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- *
+ * Classe que contém os dados do pedido.
  * @author Luan
  */
 public class Pedido {
@@ -16,6 +16,15 @@ public class Pedido {
     private double subtotal;
     private boolean status;
 
+    /**
+     * Construtor da classe Pedido.
+     * @param produto objeto produto.
+     * @param quantidade quantidade do produto pedido.
+     * @param data data do pedido.
+     * @param hora horário do pedido.
+     * @param subtotal valor total do pedido.
+     * @param status boolean que define se o pedido já foi atendido.
+     */
     public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora, double subtotal, boolean status) {
         this.produto = produto;
         this.quantidade = quantidade;

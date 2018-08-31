@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Classe que contém os dados da mesa
  * @author Luan
  */
 public class Comanda {
     private List<Pedido> pedidos;
     private int numMesa;
 
+    /**
+     * Contrutor da classe Comanda.
+     * @param pedidos pedidos feito
+     * @param numMesa numero da mesa.
+     */
     public Comanda(List<Pedido> pedidos, int numMesa) {
         this.pedidos = new ArrayList<>();
         this.numMesa = numMesa;

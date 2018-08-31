@@ -6,15 +6,20 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Classe utilizada para fazer o controle dos pedidos.
  * @author Luan
  */
 public class FazerPedido {
     private List<Produto> produtos;
     private int quantidade;
 
+    /**
+     * Construtor do pedido feito
+     * @param produtos lista de produtos.
+     * @param quantidade quantidade do produto
+     */
     public FazerPedido(List<Produto> produtos, int quantidade) {
-        this.produtos = new ArrayList<>();
+        this.produtos = produtos;
         this.quantidade = quantidade;
     }
 
