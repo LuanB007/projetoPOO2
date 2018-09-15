@@ -137,6 +137,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMesasActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new GerenciarMesa().setVisible(true);
     }//GEN-LAST:event_botaoMesasActionPerformed
 
     private void botaoCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCardapioActionPerformed
@@ -147,10 +149,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoCozinhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCozinhaActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new Pedidos().setVisible(true);
     }//GEN-LAST:event_botaoCozinhaActionPerformed
 
     private void botaoGerenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenciaActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new Gerencia().setVisible(true);
     }//GEN-LAST:event_botaoGerenciaActionPerformed
 
     /**
