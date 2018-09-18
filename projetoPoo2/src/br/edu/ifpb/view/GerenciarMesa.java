@@ -132,10 +132,14 @@ public class GerenciarMesa extends javax.swing.JFrame {
 
     private void botaoVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerPedidosActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new VerPedidos().setVisible(true);
     }//GEN-LAST:event_botaoVerPedidosActionPerformed
 
     private void botaoFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFazerPedidoActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        new FazerPedido().setVisible(true);
     }//GEN-LAST:event_botaoFazerPedidoActionPerformed
 
     private void botaoEncerrarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEncerrarComandaActionPerformed
