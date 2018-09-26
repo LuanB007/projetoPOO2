@@ -1,6 +1,7 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Funcionario;
+import java.io.IOException;
 import java.util.Set;
 /**
  *
@@ -8,10 +9,10 @@ import java.util.Set;
  */
 public interface CadastroUsuarioDao {
     
-    public boolean autentica(String user, String pass);
-    public boolean salvar(Funcionario funcionario);
-    public boolean deletar(String cpf);
-    public boolean atualizar(Funcionario funcionario, String cpf);
-    public boolean existeFuncionario(String cpf);
-    public Set<Funcionario> listar();
+    public boolean existeFuncionario(String cpf) throws IOException, ClassNotFoundException;
+    public boolean autentica(String user, String pass) throws IOException, ClassNotFoundException;
+    public boolean salvar(Funcionario funcionario) throws IOException, ClassNotFoundException;
+    public boolean deletar(String cpf) throws IOException, ClassNotFoundException;
+    public boolean atualizar(Funcionario funcionario, String cpf) throws IOException, ClassNotFoundException;
+    public Set<Funcionario> getFuncionarios() throws IOException, ClassNotFoundException;
 }

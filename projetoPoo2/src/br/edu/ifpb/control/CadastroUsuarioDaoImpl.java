@@ -1,6 +1,12 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Funcionario;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,13 +16,18 @@ import java.util.Set;
  */
 public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     
-    private Set<Funcionario> funcionarios;
+    private File file;
     
     /**
-     * Contrutor da lista de funcionários.
+     * Contrutor do arquivo de funcionários.
      */
     public CadastroUsuarioDaoImpl() {
-        this.funcionarios = new HashSet<>();
+        file = new File("FuncionariosUsuarios");
+    }
+    
+    public boolean existeFuncionario(String cpf) throws IOException, ClassNotFoundException{
+        Set<Funcionario> funcionarios = getFuncionarios();
+        return funcionarios.stream().anyMatch((f) -> (f.getCpf().equals(cpf)));
     }
     
     /**
@@ -26,7 +37,8 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
      * @return true ou false
      */
     @Override
-    public boolean autentica(String user, String pass){
+    public boolean autentica(String user, String pass) throws IOException, ClassNotFoundException{
+        Set<Funcionario> funcionarios = getFuncionarios();
         return funcionarios.stream().anyMatch((f) -> (f.getUsuario().equals(user) && f.getSenha().equals(pass)));
     }
     
@@ -36,23 +48,28 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
      * @return true ou false
      */
     @Override
-    public boolean salvar(Funcionario funcionario){
-        return funcionarios.add(funcionario);
+    public boolean salvar(Funcionario funcionario) throws IOException, ClassNotFoundException{
+        Set<Funcionario> funcionarios = getFuncionarios();
+        
+        if(funcionarios.add(funcionario)){
+            atualizarArquivo(funcionarios);
+            return true;
+        } else return false;
     }
-    
+        
     /**
      * Método usado para deletar um funcionário.
      * @param cpf CPF do funcionário.
      * @return true ou false
      */
     @Override
-    public boolean deletar(String cpf){
-        if(existeFuncionario(cpf)){
-            for (Funcionario f: funcionarios){
-                if(f.getCpf().equals(cpf)){
-                    funcionarios.remove(f);
-                    return true;
-                }
+    public boolean deletar(String cpf) throws IOException, ClassNotFoundException{
+        Set<Funcionario> funcionarios = getFuncionarios();
+        for(Funcionario f : funcionarios){
+            if(f.getCpf().equals(cpf)){
+                funcionarios.remove(f);
+                atualizarArquivo(funcionarios);
+                return true;
             }
         }
         return false;
@@ -65,35 +82,34 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
      * @return 
      */
     @Override
-    public boolean atualizar(Funcionario funcionario, String cpf){
-        if(existeFuncionario(cpf)){
-            for (Funcionario f: funcionarios){
-                if(f.getCpf().equals(cpf)){
-                    funcionarios.remove(f);
-                    funcionarios.add(funcionario);
-                    return true;
-                }
+    public boolean atualizar(Funcionario funcionario, String cpf) throws IOException, ClassNotFoundException {
+        Set<Funcionario> funcionarios = getFuncionarios();
+        for (Funcionario f: funcionarios){
+            if(f.getCpf().equals(cpf)){
+                funcionarios.remove(f);
+                funcionarios.add(funcionario);
+                atualizarArquivo(funcionarios);
+                return true;
             }
         }
         return false;
     }
     
-    /**
-     * Método utilizado para verificar se o usuário já está cadastrado.
-     * @param cpf CPF do funcionário.
-     * @return true ou false.
-     */
     @Override
-    public boolean existeFuncionario(String cpf){
-        return funcionarios.stream().anyMatch((f) -> (f.getCpf().equals(cpf)));
+    public Set<Funcionario> getFuncionarios() throws IOException, ClassNotFoundException {
+        try(ObjectInputStream in = new ObjectInputStream(
+                new FileInputStream(file))){
+            if(file.length()>0){
+                return (Set<Funcionario>) in.readObject();
+            }else{
+                return new HashSet<>();
+            }
+        }
     }
     
-    /**
-     * Método utilizado para listar todos os funcionários cadastrados.
-     * @return a lista de funcionários.
-     */
-    @Override
-    public Set<Funcionario> listar(){
-        return funcionarios;
+    private void atualizarArquivo(Set<Funcionario> funcionarios) throws IOException {
+            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+                out.writeObject(funcionarios);
+            } 
     }
 }
