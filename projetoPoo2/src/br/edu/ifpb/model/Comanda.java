@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  * Classe que contém os dados da mesa
  * @author Luan
  */
-public class Comanda {
+public class Comanda implements Serializable{
     private List<Pedido> pedidos;
     private int numMesa;
 

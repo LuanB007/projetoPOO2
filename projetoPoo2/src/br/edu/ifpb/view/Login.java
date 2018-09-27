@@ -7,6 +7,9 @@ package br.edu.ifpb.view;
 
 import br.edu.ifpb.control.CadastroUsuarioDao;
 import br.edu.ifpb.control.CadastroUsuarioDaoImpl;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,12 +22,12 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     
-    CadastroUsuarioDao usuario; 
+    CadastroUsuarioDao dao; 
     
     public Login() {
         initComponents();
         setTitle("Lanchonete Portuguesa");
-        CadastroUsuarioDao usuario = new CadastroUsuarioDaoImpl();
+        dao = new CadastroUsuarioDaoImpl();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,6 +58,12 @@ public class Login extends javax.swing.JFrame {
         campoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoUsuarioActionPerformed(evt);
+            }
+        });
+
+        campoSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoSenhaActionPerformed(evt);
             }
         });
 
@@ -138,14 +147,21 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void autenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autenticarActionPerformed
-        // TODO add your handling code here:
-        if(!usuario.autentica(campoUsuario.getText(), new String(campoSenha.getPassword()))){
-            JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreto", "Erro!", JOptionPane.ERROR_MESSAGE, null);
-        } else{
-            TelaPrincipal principal = new TelaPrincipal();
-            this.dispose();
-            principal.setVisible(true);
-            
+        try {
+            String usuario = campoUsuario.getText();
+            String senha = new String(campoSenha.getPassword());
+            if(!dao.autentica(usuario,senha)){
+                JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreto", "Erro!", JOptionPane.ERROR_MESSAGE, null);
+            } else{
+                TelaPrincipal principal = new TelaPrincipal();
+                this.dispose();
+                principal.setVisible(true);
+                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_autenticarActionPerformed
@@ -159,6 +175,10 @@ public class Login extends javax.swing.JFrame {
         new CadastroDeUsuario().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoSenhaActionPerformed
 
     /**
      * @param args the command line arguments

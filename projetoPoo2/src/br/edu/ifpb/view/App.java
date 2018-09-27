@@ -27,6 +27,7 @@ public class App {
             usuario.salvar(admin2);
             usuario.salvar(admin);
         } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -34,8 +35,13 @@ public class App {
         Produto prod = new Produto(1, "Batata frita", "Porção de batata frita com molho", 3.5);
         Produto prod2 = new Produto(2, "X-Calabresa", "Pao, hamburguer, calabresa e salada", 8.0);
         ProdutoDao produto = new ProdutoDaoImpl();
-        produto.salvar(prod2);
-        produto.salvar(prod);
+        try {
+            produto.salvar(prod2);
+            produto.salvar(prod);
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }         
         
         Scanner ler = new Scanner(System.in);
         //login. Iniciando Sistema.
@@ -201,7 +207,7 @@ public class App {
                                         }
                                         break;
                                     case 4:
-                                        System.out.println(produto.listar().toString());
+                                        System.out.println(produto.getProdutos().toString());
                                         break;
                                     default:
                                         System.out.println("Saindo...");

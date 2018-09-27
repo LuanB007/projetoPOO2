@@ -1,11 +1,12 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 /**
  * Classe que contém os dados do produto.
  * @author Luan
  */
-public class Produto {
+public class Produto implements Serializable {
     private long codigo;
     private String nome;
     private String descricao;

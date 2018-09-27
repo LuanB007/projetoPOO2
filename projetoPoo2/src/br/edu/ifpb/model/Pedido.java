@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  * Classe que contém os dados do pedido.
  * @author Luan
  */
-public class Pedido {
+public class Pedido implements Serializable {
     private Produto produto;
     private int quantidade;
     private LocalDate data;

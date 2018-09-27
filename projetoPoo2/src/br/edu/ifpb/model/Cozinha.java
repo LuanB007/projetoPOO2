@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  * Classe que contêm os pedidos que estão na cozinha.
  * @author Luan
  */
-public class Cozinha {
+public class Cozinha implements Serializable{
     private List<Pedido> pedidos;
 
     /**

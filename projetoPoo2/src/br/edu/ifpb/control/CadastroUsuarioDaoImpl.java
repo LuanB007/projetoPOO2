@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Essa classe contém os métodos necessários para fazer o CRUD de usuário(funcionário).
@@ -23,6 +25,12 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
      */
     public CadastroUsuarioDaoImpl() {
         file = new File("FuncionariosUsuarios");
+        
+        if(!file.exists()) try {
+            file.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(CadastroUsuarioDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public boolean existeFuncionario(String cpf) throws IOException, ClassNotFoundException{
@@ -97,19 +105,16 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     
     @Override
     public Set<Funcionario> getFuncionarios() throws IOException, ClassNotFoundException {
-        try(ObjectInputStream in = new ObjectInputStream(
-                new FileInputStream(file))){
-            if(file.length()>0){
-                return (Set<Funcionario>) in.readObject();
-            }else{
-                return new HashSet<>();
-            }
+        if(file.length()>0){
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+            return (Set<Funcionario>) in.readObject();
+        }else{
+            return new HashSet<>();
         }
-    }
+}
     
     private void atualizarArquivo(Set<Funcionario> funcionarios) throws IOException {
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
-                out.writeObject(funcionarios);
-            } 
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(funcionarios);
     }
 }

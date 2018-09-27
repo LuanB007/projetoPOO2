@@ -1,12 +1,13 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 /**
  * Classe que contêm os dados do funcionário.
  * @author Luan
  */
-public class Funcionario {
+public class Funcionario implements Serializable{
     private String nome;
     private String cpf;
     private String email;

@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  * 
  * @author Luan
  */
-public class Gerencia {
+public class Gerencia implements Serializable{
     private List<Comanda> comandas;
 
     /**

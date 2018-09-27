@@ -1,5 +1,6 @@
 package br.edu.ifpb.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  * Classe que contem os produtos disponíveis para pedido.
  * @author Luan
  */
-public class Cardapio {
+public class Cardapio implements Serializable{
     private List<Produto> produtos;
     
     /**
