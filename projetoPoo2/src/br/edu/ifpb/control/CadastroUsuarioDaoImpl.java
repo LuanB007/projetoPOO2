@@ -58,8 +58,9 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
     @Override
     public boolean salvar(Funcionario funcionario) throws IOException, ClassNotFoundException{
         Set<Funcionario> funcionarios = getFuncionarios();
-        
-        if(funcionarios.add(funcionario)){
+        String cpf = funcionario.getCpf();
+        if(existeFuncionario(cpf)) return false;
+        else if(funcionarios.add(funcionario)){
             atualizarArquivo(funcionarios);
             return true;
         } else return false;
