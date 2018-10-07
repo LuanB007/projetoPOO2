@@ -41,7 +41,6 @@ public class ProdutoDaoImpl implements ProdutoDao {
     @Override
     public boolean salvar(Produto produto) throws IOException, ClassNotFoundException {
         Set<Produto> produtos = getProdutos();
-        
         if(produtos.add(produto)){
             atualizarArquivo(produtos);
             return true;
@@ -75,9 +74,10 @@ public class ProdutoDaoImpl implements ProdutoDao {
     @Override
     public boolean atualizar(Produto produto, long codigo) throws IOException, ClassNotFoundException {
         Set<Produto> produtos = getProdutos();
-        for (Produto f: produtos){
-            if(f.getCodigo() == codigo){
-                produtos.remove(f);
+        
+        for (Produto p: produtos){
+            if(p.getCodigo() == codigo){
+                produtos.remove(p);
                 produtos.add(produto);
                 atualizarArquivo(produtos);
                 return true;
