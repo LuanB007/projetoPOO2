@@ -281,7 +281,7 @@ public class EditarUsuario extends javax.swing.JFrame {
         String telefone = campoTelefone.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate nascimento = LocalDate.parse(campoNascimento.getText(), formatter);
-        String setor = rotSetor.getToolTipText();
+        String setor = (String) rotSetor.getValue();
         String usuario = campoUser.getText();
         String senha = campoPass.getText();
         Funcionario f = new Funcionario(nome, cpf, email, telefone, nascimento, setor, usuario, senha);

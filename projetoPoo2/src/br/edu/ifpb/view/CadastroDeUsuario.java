@@ -189,10 +189,8 @@ public class CadastroDeUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(136, 136, 136))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(rotSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -262,7 +260,7 @@ public class CadastroDeUsuario extends javax.swing.JFrame {
         String telefone = campoTelefone.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate nascimento = LocalDate.parse(campoNascimento.getText(), formatter);
-        String setor = rotSetor.getToolTipText();
+        String setor = (String) rotSetor.getValue();
         String usuario = campoUser.getText();
         String senha = campoPass.getText();
         Funcionario f = new Funcionario(nome, cpf, email, telefone, nascimento, setor, usuario, senha);
