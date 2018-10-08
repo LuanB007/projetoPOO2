@@ -14,6 +14,10 @@ public class Comanda implements Serializable{
     private Set<Pedido> pedidos;
     private int numMesa;
 
+    public Comanda(){
+        this.pedidos = new HashSet<>();
+    }
+    
     /**
      * Contrutor da classe Comanda.
      * @param pedidos pedidos feito
@@ -43,9 +47,9 @@ public class Comanda implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + Objects.hashCode(this.pedidos);
-        hash = 31 * hash + this.numMesa;
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.pedidos);
+        hash = 17 * hash + this.numMesa;
         return hash;
     }
 
@@ -68,5 +72,12 @@ public class Comanda implements Serializable{
             return false;
         }
         return true;
+    }
+
+   
+
+    @Override
+    public String toString() {
+        return "Comanda{" + "pedidos=" + pedidos + ", numMesa=" + numMesa + '}';
     }
 }

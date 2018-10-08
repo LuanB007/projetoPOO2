@@ -6,8 +6,16 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Pedido;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,39 +23,57 @@ import java.util.Set;
  */
 public class PedidoDaoImpl implements PedidoDao {
     
-    private Set<Pedido> pedidos;
-    private int mesa;
+    private File file;
     
     public PedidoDaoImpl(){
-        this.pedidos = new HashSet<>();
-    }
-    
-    @Override
-    public boolean salvarPedido (Pedido pedido) {
-        return pedidos.add(pedido);
-    }
-    
-    @Override
-    public boolean atualizarPedido(Pedido velho, Pedido novo){
-        if((velho != null) | (novo != null)){
-            pedidos.remove(velho);
-            pedidos.add(novo);
-            return true;
+        file = new File("Comandas");
+        
+        if(!file.exists()) try {
+            file.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(CadastroUsuarioDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
     }
     
     @Override
-    public boolean removerPedido (Pedido pedido){
-        if(pedido != null){
-            pedidos.remove(pedido);
+    public boolean salvarPedido (Pedido pedido) throws IOException, ClassNotFoundException {
+        Set<Pedido> pedidos = getPedidos();
+        if(pedidos.add(pedido)){
+            atualizarArquivo(pedidos);
             return true;
-        }
-        return false;
+        } else return false;
     }
     
     @Override
-    public Set<Pedido> getPedidos(){
-        return pedidos;
+    public boolean atualizarPedido(Pedido velho, Pedido novo) throws IOException, ClassNotFoundException {
+        Set<Pedido> pedidos = getPedidos();
+        if((pedidos.remove(velho)) && (pedidos.add(novo))){
+            atualizarArquivo(pedidos);
+            return true;
+        } else return false;
+    }
+    
+    @Override
+    public boolean removerPedido (Pedido pedido) throws IOException, ClassNotFoundException{
+        Set<Pedido> pedidos = getPedidos();
+        if(pedidos.remove(pedido)){
+            atualizarArquivo(pedidos);
+            return true;
+        } else return false;
+    }
+    
+    @Override
+    public Set<Pedido> getPedidos() throws IOException, ClassNotFoundException{
+        if(file.length()>0){
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+            return (Set<Pedido>) in.readObject();
+        }else{
+            return new HashSet<>();
+        }
+    }
+    
+    private void atualizarArquivo(Set<Pedido> pedidos) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(pedidos);
     }
 }

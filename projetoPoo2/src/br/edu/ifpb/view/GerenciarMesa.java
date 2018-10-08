@@ -5,6 +5,14 @@
  */
 package br.edu.ifpb.view;
 
+import br.edu.ifpb.control.ComandaDao;
+import br.edu.ifpb.control.ComandaDaoImpl;
+import br.edu.ifpb.model.Comanda;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luan
@@ -14,7 +22,10 @@ public class GerenciarMesa extends javax.swing.JFrame {
     /**
      * Creates new form GerenciarMesa
      */
+    ComandaDao dao;
+    
     public GerenciarMesa() {
+        dao = new ComandaDaoImpl();
         initComponents();
     }
 
@@ -126,6 +137,21 @@ public class GerenciarMesa extends javax.swing.JFrame {
 
     private void botaoNovaComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaComandaActionPerformed
         // TODO add your handling code here:
+        int mesa = (int) rotMesas.getValue(); //Pega o valor do root e atribui
+        Comanda comanda = new Comanda();
+        comanda.setNumMesa(mesa); //Definindo a mesa que abriu a comanda
+        try {
+            if(dao.salvarComanda(comanda)){ // Salvando
+                System.out.println(dao.getComandas());
+                JOptionPane.showMessageDialog(rootPane, "Nova comanda para a mesa " + mesa);
+                this.dispose();
+                new TelaPrincipal().setVisible(true);
+            } else JOptionPane.showMessageDialog(rootPane, "Já existe uma comanda aberta para essa mesa!", null, JOptionPane.WARNING_MESSAGE, null);
+        } catch (IOException ex) {
+            Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoNovaComandaActionPerformed
 
     private void botaoVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerPedidosActionPerformed

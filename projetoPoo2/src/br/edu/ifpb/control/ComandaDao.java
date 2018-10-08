@@ -1,6 +1,7 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Comanda;
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -9,8 +10,9 @@ import java.util.Set;
  */
 public interface ComandaDao {
     
-    public boolean salvarComanda(Comanda comanda);
-    public boolean atualizarComanda(Comanda novaComanda, int mesaVelha);
-    public boolean removerComanda(int mesa);
-     public Set<Comanda> getComandas();
+    public boolean existeComanda(int mesa) throws IOException, ClassNotFoundException;
+    public boolean salvarComanda(Comanda comanda)  throws IOException, ClassNotFoundException;
+    public boolean atualizarComanda(Comanda novaComanda, int mesaVelha)  throws IOException, ClassNotFoundException;
+    public boolean removerComanda(int mesa) throws IOException, ClassNotFoundException;
+     public Set<Comanda> getComandas() throws IOException, ClassNotFoundException;
 }

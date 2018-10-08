@@ -6,6 +6,7 @@
 package br.edu.ifpb.control;
 
 import br.edu.ifpb.model.Pedido;
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -14,8 +15,8 @@ import java.util.Set;
  */
 public interface PedidoDao {
     
-    public boolean salvarPedido (Pedido pedido);
-    public boolean atualizarPedido(Pedido velho, Pedido novo);
-    public boolean removerPedido (Pedido pedido);
-    public Set<Pedido> getPedidos();
+    public boolean salvarPedido (Pedido pedido) throws IOException, ClassNotFoundException;
+    public boolean atualizarPedido(Pedido velho, Pedido novo) throws IOException, ClassNotFoundException;
+    public boolean removerPedido (Pedido pedido) throws IOException, ClassNotFoundException;
+    public Set<Pedido> getPedidos() throws IOException, ClassNotFoundException;
 }

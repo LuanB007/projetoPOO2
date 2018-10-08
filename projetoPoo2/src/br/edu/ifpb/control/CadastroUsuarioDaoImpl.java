@@ -33,6 +33,7 @@ public class CadastroUsuarioDaoImpl implements CadastroUsuarioDao {
         }
     }
     
+    @Override
     public boolean existeFuncionario(String cpf) throws IOException, ClassNotFoundException{
         Set<Funcionario> funcionarios = getFuncionarios();
         return funcionarios.stream().anyMatch((f) -> (f.getCpf().equals(cpf)));
