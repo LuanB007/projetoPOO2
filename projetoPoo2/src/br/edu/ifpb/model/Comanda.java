@@ -1,16 +1,17 @@
 package br.edu.ifpb.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Classe que contém os dados da mesa
  * @author Luan
  */
 public class Comanda implements Serializable{
-    private List<Pedido> pedidos;
+    private Set<Pedido> pedidos;
     private int numMesa;
 
     /**
@@ -18,16 +19,17 @@ public class Comanda implements Serializable{
      * @param pedidos pedidos feito
      * @param numMesa numero da mesa.
      */
-    public Comanda(List<Pedido> pedidos, int numMesa) {
-        this.pedidos = new ArrayList<>();
+    public Comanda(Set<Pedido> pedidos, int numMesa) {
+        this.pedidos = new HashSet<>();
         this.numMesa = numMesa;
     }
 
-    public List<Pedido> getPedidos() {
+    public Set<Pedido> getPedidos() {
+        if(pedidos == null) pedidos = new HashSet<>();
         return pedidos;
     }
 
-    public void setPedidos(List<Pedido> pedidos) {
+    public void setPedidos(Set<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
 

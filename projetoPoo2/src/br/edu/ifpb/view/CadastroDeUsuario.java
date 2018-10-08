@@ -11,6 +11,7 @@ import br.edu.ifpb.model.Funcionario;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -272,7 +273,7 @@ public class CadastroDeUsuario extends javax.swing.JFrame {
                 this.dispose();
                 new Login().setVisible(true);
             } else JOptionPane.showMessageDialog(rootPane, "Esse usuário já foi cadastrado!", null, JOptionPane.WARNING_MESSAGE, null);
-        } catch (IOException | ClassNotFoundException ex) {
+        }catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(CadastroDeUsuario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, "Falha na conexão com o arquivo!", null, JOptionPane.WARNING_MESSAGE, null);
         }
