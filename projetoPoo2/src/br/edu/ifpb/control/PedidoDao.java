@@ -5,10 +5,17 @@
  */
 package br.edu.ifpb.control;
 
+import br.edu.ifpb.model.Pedido;
+import java.util.Set;
+
 /**
  *
  * @author Luan
  */
 public interface PedidoDao {
     
+    public boolean salvarPedido (Pedido pedido);
+    public boolean atualizarPedido(Pedido velho, Pedido novo);
+    public boolean removerPedido (Pedido pedido);
+    public Set<Pedido> getPedidos();
 }

@@ -22,10 +22,12 @@ public class PedidoDaoImpl implements PedidoDao {
         this.pedidos = new HashSet<>();
     }
     
+    @Override
     public boolean salvarPedido (Pedido pedido) {
         return pedidos.add(pedido);
     }
     
+    @Override
     public boolean atualizarPedido(Pedido velho, Pedido novo){
         if((velho != null) | (novo != null)){
             pedidos.remove(velho);
@@ -35,6 +37,7 @@ public class PedidoDaoImpl implements PedidoDao {
         return false;
     }
     
+    @Override
     public boolean removerPedido (Pedido pedido){
         if(pedido != null){
             pedidos.remove(pedido);
@@ -43,6 +46,7 @@ public class PedidoDaoImpl implements PedidoDao {
         return false;
     }
     
+    @Override
     public Set<Pedido> getPedidos(){
         return pedidos;
     }
