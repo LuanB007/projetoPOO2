@@ -163,8 +163,14 @@ public class GerenciarMesa extends javax.swing.JFrame {
     private void botaoVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerPedidosActionPerformed
         // TODO add your handling code here:
         int mesa = (int) rotMesas.getValue();
-        this.dispose(); // Não deixar abrir se não tiver uma comanda aberta para a mesa !!!!!!!!!
-        new VerPedidos(mesa).setVisible(true);
+        try {
+            if(daoComanda.existeComanda(mesa)){
+                this.dispose();
+                new VerPedidos(mesa).setVisible(true);
+            } else JOptionPane.showMessageDialog(rootPane, "Não existe uma comanda aberta para essa mesa!", null, JOptionPane.WARNING_MESSAGE, null);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoVerPedidosActionPerformed
 
     private void botaoFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFazerPedidoActionPerformed
@@ -174,7 +180,7 @@ public class GerenciarMesa extends javax.swing.JFrame {
             if(daoComanda.existeComanda(mesa)){
                 this.dispose();
                 new FazerPedido(mesa).setVisible(true); 
-            } else JOptionPane.showMessageDialog(rootPane, "Já existe uma comanda aberta para essa mesa!", null, JOptionPane.WARNING_MESSAGE, null);
+            } else JOptionPane.showMessageDialog(rootPane, "Não existe uma comanda aberta para essa mesa!", null, JOptionPane.WARNING_MESSAGE, null);
                 } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
         }

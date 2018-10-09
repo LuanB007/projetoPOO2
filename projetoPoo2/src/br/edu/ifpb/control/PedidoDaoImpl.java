@@ -39,6 +39,7 @@ public class PedidoDaoImpl implements PedidoDao {
     public boolean salvarPedido (Pedido pedido) throws IOException, ClassNotFoundException {
         Set<Pedido> pedidos = getPedidos();
         if(pedidos.add(pedido)){
+            atualizarSubtotal(pedidos);
             atualizarArquivo(pedidos);
             return true;
         } else return false;
@@ -48,6 +49,7 @@ public class PedidoDaoImpl implements PedidoDao {
     public boolean atualizarPedido(Pedido velho, Pedido novo) throws IOException, ClassNotFoundException {
         Set<Pedido> pedidos = getPedidos();
         if((pedidos.remove(velho)) && (pedidos.add(novo))){
+            atualizarSubtotal(pedidos);
             atualizarArquivo(pedidos);
             return true;
         } else return false;
@@ -101,5 +103,11 @@ public class PedidoDaoImpl implements PedidoDao {
     private void atualizarArquivo(Set<Pedido> pedidos) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         out.writeObject(pedidos);
+    }
+
+    private void atualizarSubtotal(Set<Pedido> pedidos) throws IOException, ClassNotFoundException {
+        for(Pedido pedido : pedidos){
+            pedido.setSubtotal(pedido.getQuantidade()*pedido.getProduto().getPrecoUnit());
+        }
     }
 }

@@ -154,11 +154,16 @@ public class VerPedidos extends javax.swing.JFrame {
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         // TODO add your handling code here:
         PedidoDao p = new PedidoDaoImpl();
+        double total = 0;
         try {
-            Set<Pedido> pedidos = p.getPedidos();
+            Set<Pedido> pedidos = p.getPedidoMesa(mesa);
             for (Pedido pedido : pedidos){
-                dm.addElement(pedido);
+                if(pedido.isStatus() == false){
+                    total += pedido.getSubtotal();
+                    dm.addElement(pedido);
+                }
             }
+            campoTotal.setText("R$ "+total);
             listaDePedidos.setModel(dm);
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
