@@ -19,4 +19,6 @@ public interface PedidoDao {
     public boolean atualizarPedido(Pedido velho, Pedido novo) throws IOException, ClassNotFoundException;
     public boolean removerPedido (Pedido pedido) throws IOException, ClassNotFoundException;
     public Set<Pedido> getPedidos() throws IOException, ClassNotFoundException;
+    public Set<Pedido> getPedidoMesa(int mesa) throws IOException, ClassNotFoundException;
+    public double valorTotal(int mesa) throws IOException, ClassNotFoundException;
 }

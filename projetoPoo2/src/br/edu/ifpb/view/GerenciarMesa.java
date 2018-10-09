@@ -7,8 +7,12 @@ package br.edu.ifpb.view;
 
 import br.edu.ifpb.control.ComandaDao;
 import br.edu.ifpb.control.ComandaDaoImpl;
+import br.edu.ifpb.control.PedidoDao;
+import br.edu.ifpb.control.PedidoDaoImpl;
 import br.edu.ifpb.model.Comanda;
+import br.edu.ifpb.model.Pedido;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,10 +26,12 @@ public class GerenciarMesa extends javax.swing.JFrame {
     /**
      * Creates new form GerenciarMesa
      */
-    ComandaDao dao;
+    ComandaDao daoComanda;
+    PedidoDao daoPedido;
     
     public GerenciarMesa() {
-        dao = new ComandaDaoImpl();
+        daoComanda = new ComandaDaoImpl();
+        daoPedido = new PedidoDaoImpl();
         initComponents();
     }
 
@@ -141,8 +147,8 @@ public class GerenciarMesa extends javax.swing.JFrame {
         Comanda comanda = new Comanda();
         comanda.setNumMesa(mesa); //Definindo a mesa que abriu a comanda
         try {
-            if(dao.salvarComanda(comanda)){ // Salvando
-                System.out.println(dao.getComandas());
+            if(daoComanda.salvarComanda(comanda)){ // Salvando
+                System.out.println(daoComanda.getComandas());
                 JOptionPane.showMessageDialog(rootPane, "Nova comanda para a mesa " + mesa);
                 this.dispose();
                 new TelaPrincipal().setVisible(true);
@@ -156,18 +162,38 @@ public class GerenciarMesa extends javax.swing.JFrame {
 
     private void botaoVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerPedidosActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new VerPedidos().setVisible(true);
+        int mesa = (int) rotMesas.getValue();
+        this.dispose(); // Não deixar abrir se não tiver uma comanda aberta para a mesa !!!!!!!!!
+        new VerPedidos(mesa).setVisible(true);
     }//GEN-LAST:event_botaoVerPedidosActionPerformed
 
     private void botaoFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFazerPedidoActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new FazerPedido().setVisible(true);
+        int mesa = (int) rotMesas.getValue(); //Pega o valor do root e atribui
+        try {
+            if(daoComanda.existeComanda(mesa)){
+                this.dispose();
+                new FazerPedido(mesa).setVisible(true); 
+            } else JOptionPane.showMessageDialog(rootPane, "Já existe uma comanda aberta para essa mesa!", null, JOptionPane.WARNING_MESSAGE, null);
+                } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoFazerPedidoActionPerformed
 
     private void botaoEncerrarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEncerrarComandaActionPerformed
         // TODO add your handling code here:
+        int mesa = (int) rotMesas.getValue();
+        double total = 0;
+        try {
+            Set<Pedido> pedidos = daoPedido.getPedidoMesa(mesa);
+            
+            if(daoComanda.removerComanda(mesa)){
+                total = daoPedido.valorTotal(mesa);
+                JOptionPane.showMessageDialog(rootPane, "Comanda encerrada. Total R$"+total, null, JOptionPane.PLAIN_MESSAGE, null);
+            }else JOptionPane.showMessageDialog(rootPane, "Nenhuma comanda aberta para essa mesa", null, JOptionPane.WARNING_MESSAGE, null);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(GerenciarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoEncerrarComandaActionPerformed
 
     /**

@@ -16,6 +16,7 @@ public class Pedido implements Serializable {
     private LocalDateTime hora;
     private double subtotal;
     private boolean status;
+    private int numMesa;
 
     public Pedido(){
         
@@ -27,11 +28,12 @@ public class Pedido implements Serializable {
      * @param data data do pedido.
      * @param hora horário do pedido.
      */
-    public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora) {
+    public Pedido(Produto produto, int quantidade, LocalDate data, LocalDate hora, int numMesa) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.data = LocalDate.now();
         this.hora = LocalDateTime.now();
+        this.numMesa = numMesa;
         this.status = false;
     }
 
@@ -68,11 +70,19 @@ public class Pedido implements Serializable {
     }
 
     public double getSubtotal() {
-        return produto.getPrecoUnit()*quantidade;
+        return subtotal;
     }
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public int getNumMesa() {
+        return numMesa;
+    }
+
+    public void setNumMesa(int numMesa) {
+        this.numMesa = numMesa;
     }
 
     public boolean isStatus() {
@@ -86,12 +96,13 @@ public class Pedido implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 43 * hash + Objects.hashCode(this.produto);
-        hash = 43 * hash + this.quantidade;
-        hash = 43 * hash + Objects.hashCode(this.data);
-        hash = 43 * hash + Objects.hashCode(this.hora);
-        hash = 43 * hash + (int) (Double.doubleToLongBits(this.subtotal) ^ (Double.doubleToLongBits(this.subtotal) >>> 32));
-        hash = 43 * hash + (this.status ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.produto);
+        hash = 29 * hash + this.quantidade;
+        hash = 29 * hash + Objects.hashCode(this.data);
+        hash = 29 * hash + Objects.hashCode(this.hora);
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.subtotal) ^ (Double.doubleToLongBits(this.subtotal) >>> 32));
+        hash = 29 * hash + (this.status ? 1 : 0);
+        hash = 29 * hash + this.numMesa;
         return hash;
     }
 
@@ -116,6 +127,9 @@ public class Pedido implements Serializable {
         if (this.status != other.status) {
             return false;
         }
+        if (this.numMesa != other.numMesa) {
+            return false;
+        }
         if (!Objects.equals(this.produto, other.produto)) {
             return false;
         }
@@ -130,7 +144,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "produto=" + produto + ", quantidade=" + quantidade + ", data=" + data + ", hora=" + hora + ", subtotal=" + subtotal + ", status=" + status + '}';
+        return "Pedido{" + "produto=" + produto + ", quantidade=" + quantidade + ", data=" + data + ", hora=" + hora + ", subtotal=" + subtotal + ", status=" + status + ", numMesa=" + numMesa + '}';
     }
 
 }

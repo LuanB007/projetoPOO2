@@ -5,6 +5,25 @@
  */
 package br.edu.ifpb.view;
 
+import br.edu.ifpb.control.ComandaDao;
+import br.edu.ifpb.control.ComandaDaoImpl;
+import br.edu.ifpb.control.PedidoDao;
+import br.edu.ifpb.control.PedidoDaoImpl;
+import br.edu.ifpb.control.ProdutoDao;
+import br.edu.ifpb.control.ProdutoDaoImpl;
+import br.edu.ifpb.model.Comanda;
+import br.edu.ifpb.model.Pedido;
+import br.edu.ifpb.model.Produto;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luan
@@ -14,8 +33,21 @@ public class FazerPedido extends javax.swing.JFrame {
     /**
      * Creates new form FazerPedido
      */
-    public FazerPedido() {
+    int mesa;
+    DefaultListModel dm;
+    ComandaDao daoComanda;
+    PedidoDao daoPedido;
+    
+    public FazerPedido(int mesa) {
         initComponents();
+        this.mesa = mesa;
+        dm = new DefaultListModel();
+        daoComanda = new ComandaDaoImpl();
+        daoPedido = new PedidoDaoImpl();
+    }
+
+    private FazerPedido() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -29,10 +61,12 @@ public class FazerPedido extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        rotProdutos = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        campoQuantidade = new javax.swing.JFormattedTextField();
         botaoAdicionar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListaDeProdutos = new javax.swing.JList<>();
+        botaoAtualizar = new javax.swing.JButton();
+        campoQuantidade = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,13 +76,8 @@ public class FazerPedido extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Produto:");
 
-        rotProdutos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        rotProdutos.setModel(new javax.swing.SpinnerListModel(new String[] {"Item 0", "Item 1", "Item 2", "Item 3"}));
-
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Quantidade:");
-
-        campoQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####"))));
 
         botaoAdicionar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         botaoAdicionar.setText("Adicionar");
@@ -58,46 +87,66 @@ public class FazerPedido extends javax.swing.JFrame {
             }
         });
 
+        ListaDeProdutos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jScrollPane1.setViewportView(ListaDeProdutos);
+
+        botaoAtualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
+
+        campoQuantidade.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        campoQuantidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoQuantidadeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(143, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(141, 141, 141))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(rotProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                            .addComponent(campoQuantidade)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoQuantidade))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rotProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -105,7 +154,57 @@ public class FazerPedido extends javax.swing.JFrame {
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
+        Pedido pedido = new Pedido();
+        int quantidade = Integer.parseInt(campoQuantidade.getText());
+        int indice = ListaDeProdutos.getSelectedIndex(); //Pegar o produto selecionado na lista
+        Produto produto = (Produto) dm.get(indice); // Pegar o objeto que foi selecionado
+        pedido.setProduto(produto);
+        pedido.setData(LocalDate.now());
+        pedido.setHora(LocalDateTime.now());
+        pedido.setQuantidade(quantidade);
+        pedido.setNumMesa(mesa);
+        Comanda comanda = new Comanda();
+        comanda.setNumMesa(mesa);
+        
+        try {
+            if(!daoComanda.existeComanda(mesa)) {
+                daoComanda.salvarComanda(comanda);
+                daoPedido.salvarPedido(pedido);
+                JOptionPane.showMessageDialog(rootPane, "Nova comanda para a mesa "+mesa, null, JOptionPane.INFORMATION_MESSAGE, null);
+                JOptionPane.showMessageDialog(rootPane, "Pedido adicionado!", null, JOptionPane.INFORMATION_MESSAGE, null);
+                this.dispose();
+                new GerenciarMesa().setVisible(true);
+            } else {
+                daoPedido.salvarPedido(pedido);
+                JOptionPane.showMessageDialog(rootPane, "Pedido adicionado!", null, JOptionPane.INFORMATION_MESSAGE, null);
+                this.dispose();
+                new GerenciarMesa().setVisible(true);
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        // TODO add your handling code here:
+         
+        ProdutoDao p = new ProdutoDaoImpl();
+        try {
+            Set<Produto> produtos = p.getProdutos();
+            for (Produto produto : produtos){
+                dm.addElement(produto);
+            }
+            ListaDeProdutos.setModel(dm);
+        } catch (IOException ex) {
+            Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
+
+    private void campoQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoQuantidadeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,11 +242,13 @@ public class FazerPedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> ListaDeProdutos;
     private javax.swing.JButton botaoAdicionar;
-    private javax.swing.JFormattedTextField campoQuantidade;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JTextField campoQuantidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JSpinner rotProdutos;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,7 +26,7 @@ public class PedidoDaoImpl implements PedidoDao {
     private File file;
     
     public PedidoDaoImpl(){
-        file = new File("Comandas");
+        file = new File("Pedidos");
         
         if(!file.exists()) try {
             file.createNewFile();
@@ -71,6 +71,32 @@ public class PedidoDaoImpl implements PedidoDao {
             return new HashSet<>();
         }
     }
+    
+    @Override
+    public Set<Pedido> getPedidoMesa(int mesa) throws IOException, ClassNotFoundException{
+        Set<Pedido> pedidos = getPedidos();
+        Set<Pedido> pedidosMesa = new HashSet<>();
+        for (Pedido pedido : pedidos){
+            if(pedido.getNumMesa() == mesa){
+                pedidosMesa.add(pedido);
+            }
+        }
+        return pedidosMesa;
+    }
+    
+    @Override
+   public double valorTotal(int mesa) throws IOException, ClassNotFoundException{
+       Set<Pedido> pedidos = getPedidos();
+       double total = 0;
+       for(Pedido pedido : pedidos){
+           if((pedido.getNumMesa() == mesa)&&(pedido.isStatus() == false)){
+               total += (pedido.getProduto().getPrecoUnit() * pedido.getQuantidade());
+               pedido.setStatus(true);
+               atualizarArquivo(pedidos);
+           }
+       }
+       return total;
+   }
     
     private void atualizarArquivo(Set<Pedido> pedidos) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
