@@ -279,13 +279,13 @@ public class EditarUsuario extends javax.swing.JFrame {
         String nome = campoNome.getText();
         String email = campoEmail.getText();
         String telefone = campoTelefone.getText();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate nascimento = LocalDate.parse(campoNascimento.getText(), formatter);
         String setor = (String) rotSetor.getValue();
         String usuario = campoUser.getText();
         String senha = campoPass.getText();
-        Funcionario f = new Funcionario(nome, cpf, email, telefone, nascimento, setor, usuario, senha);
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate nascimento = LocalDate.parse(campoNascimento.getText(), formatter);
+            Funcionario f = new Funcionario(nome, cpf, email, telefone, nascimento, setor, usuario, senha);
             if((cpf.length()!=14)|(nome.length()==0)|(email.length()==0)|(telefone.length()!=15)|(usuario.length()==0)|(senha.length()==0)){
                 JOptionPane.showMessageDialog(rootPane, "Preencha os campos corretamente!", null, JOptionPane.WARNING_MESSAGE, null);
             }else if(!dao.existeFuncionario(campoCpf.getText())){

@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,21 @@ public class VerPedidos extends javax.swing.JFrame {
         initComponents();
         this.mesa = mesa;
         dm = new DefaultListModel();
+        PedidoDao p = new PedidoDaoImpl();
+        double total = 0;
+        try {
+            Set<Pedido> pedidos = p.getPedidoMesa(mesa);
+            for (Pedido pedido : pedidos){
+                if(pedido.isStatus() == false){
+                    total += pedido.getSubtotal();
+                    dm.addElement(pedido);
+                }
+            }
+            campoTotal.setText("R$ "+total);
+            listaDePedidos.setModel(dm);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private VerPedidos() {
@@ -133,7 +149,7 @@ public class VerPedidos extends javax.swing.JFrame {
                     .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoOk, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,27 +163,20 @@ public class VerPedidos extends javax.swing.JFrame {
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new EditarPedido().setVisible(true);
+        int indice;
+        try{
+            indice = listaDePedidos.getSelectedIndex();
+            Pedido pedido = (Pedido) dm.get(indice);
+            this.dispose();
+            new EditarPedido(pedido).setVisible(true);
+        } catch(ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(rootPane, "Selecione um pedido", null, JOptionPane.WARNING_MESSAGE, null);
+        }
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         // TODO add your handling code here:
-        PedidoDao p = new PedidoDaoImpl();
-        double total = 0;
-        try {
-            Set<Pedido> pedidos = p.getPedidoMesa(mesa);
-            for (Pedido pedido : pedidos){
-                if(pedido.isStatus() == false){
-                    total += pedido.getSubtotal();
-                    dm.addElement(pedido);
-                }
-            }
-            campoTotal.setText("R$ "+total);
-            listaDePedidos.setModel(dm);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(FazerPedido.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     /**
